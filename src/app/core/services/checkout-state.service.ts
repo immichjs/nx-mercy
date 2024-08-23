@@ -8,16 +8,7 @@ import { Checkout } from '../models/checkout';
 })
 export class CheckoutStateService {
   private checkout$ = new BehaviorSubject<Checkout>({
-    products: [
-      {
-        id: 1,
-        name: 'Notebook',
-        price: 4500.9,
-        description:
-          'O notebook combina desempenho e portabilidade com um processador de última geração, 16 GB de RAM e SSD de 512 GB para armazenamento rápido. Tela Full HD de 15,6 polegadas oferece excelente qualidade de imagem, ideal para trabalho e entretenimento. Bateria de longa duração.',
-        quantity: 1,
-      },
-    ],
+    products: [],
   });
 
   public addProductToCheckout(product: Product) {
@@ -40,6 +31,10 @@ export class CheckoutStateService {
     };
 
     this.checkout$.next(updatedCheckout);
+  }
+
+  public resetCheckout() {
+    this.checkout$.next({ products: [] });
   }
 
   public checkoutAsObservable() {

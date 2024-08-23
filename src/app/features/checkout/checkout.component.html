@@ -1,5 +1,5 @@
 <main class="flex justify-center py-8">
-  <section class="container">
+  <section class="container px-6 md:px-0">
     <button
       class="flex gap-1 items-center border bg-white px-3 py-1.5 rounded-lg text-zinc-900 font-semibold text-sm"
       [routerLink]="['/products']"
@@ -24,8 +24,8 @@
       Retornar
     </button>
 
-    <section class="flex items-start container gap-4 mt-8">
-      <section class="flex-1 bg-white border rounded-lg overflow-hidden">
+    <section class="flex flex-col lg:flex-row items-start container gap-4 mt-8">
+      <section class="w-full flex-1 bg-white border rounded-lg overflow-hidden">
         <div class="bg-white border-b p-4">
           <h2 class="text-lg font-semibold text-zinc-900">
             Carrinho de Compras ({{ checkout.products.length }})
@@ -104,7 +104,7 @@
         </ul>
       </section>
 
-      <section class="w-96 bg-white border rounded-lg p-4">
+      <section class="w-full lg:w-96 bg-white border rounded-lg p-4">
         <div class="bg-white">
           <h2 class="text-lg text-zinc-900 font-semibold">Resumo</h2>
         </div>

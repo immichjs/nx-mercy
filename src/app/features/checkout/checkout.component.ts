@@ -6,6 +6,7 @@ import { CurrencyPipe, JsonPipe } from '@angular/common';
 import { ProductCheckout } from '../../core/models/product-checkout';
 import { timer } from 'rxjs';
 import { LoadingComponent } from '../../shared/components/loading/loading.component';
+import { OrderStateService } from '../../core/services/order-state.service';
 
 @Component({
   selector: 'app-checkout',
@@ -15,6 +16,7 @@ import { LoadingComponent } from '../../shared/components/loading/loading.compon
 })
 export class CheckoutComponent implements OnInit {
   private readonly _checkoutStateService = inject(CheckoutStateService);
+  private readonly _orderStateService = inject(OrderStateService);
   private readonly _router = inject(Router);
   public checkout: Checkout = {
     products: [],
@@ -72,6 +74,8 @@ export class CheckoutComponent implements OnInit {
 
     timer(3000).subscribe(() => {
       this.loadingFinishOrder = false;
+      this._orderStateService.addOrder(this.checkout);
+      this._checkoutStateService.resetCheckout();
       this._router.navigate(['/orders']);
     });
   }

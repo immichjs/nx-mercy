@@ -8,9 +8,101 @@
     </div>
   </section>
 
-  <section class="my-12">
-    <app-loading
+  <section class="container flex flex-col md:flex-row gap-4 my-12">
+    <!-- <app-loading
       custom="w-12 h-12 border-[3px] border-zinc-900/5 border-r-emerald-600  rounded-full animate-spin"
-    />
+    /> -->
+
+    <section
+      class="hidden md:block min-w-72 bg-white border rounded-lg overflow-hidden"
+    >
+      <div class="flex flex-col items-start bg-white border-b p-4">
+        <h2 class="text-zinc-900 text-xl font-semibold">Minha conta</h2>
+
+        <div class="mt-4">
+          @for (route of routes; track route) {
+          <button
+            class="font-semibold text-zinc-900 border-l-4 border-transparent px-3 py-3 rounded-tr-lg rounded-br-lg w-full text-start"
+            [routerLink]="[route.path]"
+            routerLinkActive="bg-zinc-100 border-emerald-600"
+          >
+            {{ route.label }}
+          </button>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="flex-1 w-full px-6 md:px-0">
+      <section class="p-4 bg-white border rounded-lg overflow-hidden">
+        <ul class="flex">
+          <li
+            class="md:text-lg px-2 p-2 font-semibold border-b-[3px] text-emerald-600 border-b-emerald-600"
+          >
+            Todos
+          </li>
+          <li class="md:text-lg px-2 p-2 font-semibold text-zinc-900">
+            Enviado (0)
+          </li>
+          <li class="md:text-lg px-2 p-2 font-semibold text-zinc-900">
+            Concluído
+          </li>
+        </ul>
+      </section>
+
+      <ul class="flex flex-col gap-3 mt-4">
+        @for (order of orders; track order) {
+        <li class="flex flex-col gap-3 bg-white border rounded-lg">
+          @for(product of order.checkout.products; track product) {
+          <section class="flex gap-3 p-4 first:border-none border-t">
+            <div
+              class="relative flex items-center justify-center min-w-20 h-20 rounded-lg border"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+              >
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  color="currentColor"
+                  class="stroke-zinc-300"
+                >
+                  <path
+                    d="M4.463 4.5c-.318.128-.6.289-.856.49q-.301.24-.554.523C2 6.693 2 8.463 2 12s0 5.306 1.053 6.487q.253.284.554.522C4.862 20 6.741 20 10.5 20h3c2.992 0 4.757 0 6-.5M8 4.016C8.728 4 9.554 4 10.5 4h3c3.759 0 5.638 0 6.892.99q.302.24.555.523C22 6.693 22 8.463 22 12c0 2.313 0 3.87-.294 5m-3.196-5h-.01m-13 0h-.009"
+                  />
+                  <path
+                    d="M13.744 13.742a2.5 2.5 0 1 1-3.535-3.535M2 2l20 20"
+                  />
+                </g>
+              </svg>
+            </div>
+            <section
+              class="flex justify-between items-center w-full overflow-hidden"
+            >
+              <div>
+                <h2 class="truncate font-semibold">{{ product.name }}</h2>
+                <p class="text-emerald-600 text-sm font-medium">Frete grátis</p>
+                <p class="truncate font-semibold text-lg text-emerald-600">
+                  <span class="text-xs text-zinc-400">R$</span>
+                  {{ product.price | currency : " " }}
+                </p>
+              </div>
+            </section>
+          </section>
+          }
+        </li>
+        } @empty {
+        <li class="p-4 border-t first:border-none">
+          Nenhum pedido foi realizado
+        </li>
+        }
+      </ul>
+    </section>
   </section>
 </main>
