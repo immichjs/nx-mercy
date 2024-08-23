@@ -1,0 +1,103 @@
+<main class="flex flex-col items-center justify-center">
+  <section class="flex justify-center w-full border-b bg-white">
+    <div class="container py-12 px-6 lg:px-0">
+      <h1 class="text-3xl font-bold text-zinc-900">Produtos</h1>
+      <p class="text-zinc-400">Lista de produtos disponíveis para comprar.</p>
+    </div>
+  </section>
+
+  <section class="container my-12 px-6 lg:px-0">
+    <ul
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-3"
+    >
+      @for(product of products$ | async; track product.id) {
+      <li class="border p-4 rounded-lg bg-white">
+        <div class="flex gap-3">
+          <div
+            class="relative flex items-center justify-center min-w-20 h-20 rounded-lg border"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+            >
+              <g
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                color="currentColor"
+                class="stroke-zinc-300"
+              >
+                <path
+                  d="M4.463 4.5c-.318.128-.6.289-.856.49q-.301.24-.554.523C2 6.693 2 8.463 2 12s0 5.306 1.053 6.487q.253.284.554.522C4.862 20 6.741 20 10.5 20h3c2.992 0 4.757 0 6-.5M8 4.016C8.728 4 9.554 4 10.5 4h3c3.759 0 5.638 0 6.892.99q.302.24.555.523C22 6.693 22 8.463 22 12c0 2.313 0 3.87-.294 5m-3.196-5h-.01m-13 0h-.009"
+                />
+                <path d="M13.744 13.742a2.5 2.5 0 1 1-3.535-3.535M2 2l20 20" />
+              </g>
+            </svg>
+
+            @if(product.discount) {
+            <div class="absolute top-1 right-1 px-1 rounded bg-red-50">
+              <span class="font-semibold text-red-500">{{
+                -product.discount | percent
+              }}</span>
+            </div>
+            }
+          </div>
+
+          <div class="overflow-hidden">
+            <p class="w-full text-zinc-900 truncate">
+              <strong>{{ product.name }}</strong> asas dasd ad asd asd asdas,kh
+              dvgasjhgdv ajshjahsvg
+            </p>
+
+            <div class="flex flex-col items-end ml-auto">
+              @if(product.discount) {
+              <span class="text-zinc-400 line-through">{{
+                (product.price + product.price * product.discount).toFixed(2)
+                  | currency : "R$ "
+              }}</span>
+              }
+              <p class="text-xl font-bold text-emerald-600">
+                <span class="text-sm text-zinc-400 font-normal">R$</span>
+                {{ product.price | currency : " " }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-4 text-sm text-zinc-500">
+          <p>
+            Receba até <strong class="text-zinc-700">sábado, agosto 24</strong>
+          </p>
+          <p>
+            Frete <strong class="text-zinc-700">GRÁTIS</strong> em pedidos acima
+            de R$ 129,00
+          </p>
+        </div>
+
+        <button
+          class="flex items-center gap-2 justify-center bg-emerald-600 text-white rounded-lg w-full py-3 font-semibold disabled:cursor-not-allowed disabled:bg-emerald-600/80"
+          [disabled]="product.loading"
+          (click)="onAddProductToCheckout(product)"
+        >
+          @if (product.loading) { Adicionando... <app-loading />
+          } @else { Adicionar ao carrinho }
+        </button>
+      </li>
+      } @empty { @if (productService.loadingProducts) {
+      <li class="w-full col-span-full flex items-center justify-center">
+        <app-loading
+          custom="w-12 h-12 border-[3px] border-zinc-900/5 border-r-emerald-600  rounded-full animate-spin"
+        />
+      </li>
+      } @else {
+      <li class="flex items-center justify-center">
+        Nenhum produto encontrado. :(
+      </li>
+      } }
+    </ul>
+  </section>
+</main>

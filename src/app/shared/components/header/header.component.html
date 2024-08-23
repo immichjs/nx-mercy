@@ -1,0 +1,49 @@
+<header class="flex items-center justify-center border-b h-16 bg-white">
+  <section
+    class="container flex justify-between items-center px-6 lg:px-0 h-full"
+  >
+    <div class="flex items-center gap-4 h-full">
+      <h2 class="text-lg uppercase font-bold text-emerald-500">
+        Nx <span class="text-zinc-900">Mercy</span>
+      </h2>
+
+      <div class="h-4 bg-zinc-200 w-[1px]"></div>
+
+      <app-navigation class="h-full" />
+    </div>
+
+    <button class="relative px-4 py-2" [routerLink]="['/checkout']">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        class="w-7 group"
+      >
+        <g
+          fill="none"
+          stroke="currentColor"
+          class="stroke-zinc-800 group-hover:stroke-emerald-600"
+          stroke-width="1.5"
+        >
+          <path
+            d="M3.555 14.257c-.718-3.353-1.078-5.03-.177-6.143C4.278 7 5.993 7 9.422 7h5.156c3.43 0 5.143 0 6.044 1.114c.9 1.114.541 2.79-.177 6.143l-.429 2c-.487 2.273-.73 3.409-1.555 4.076c-.825.667-1.987.667-4.311.667h-4.3c-2.324 0-3.486 0-4.31-.667c-.826-.667-1.07-1.803-1.556-4.076z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8 12h8m-6 3h4m4-6l-3-6M6 9l3-6"
+          />
+        </g>
+      </svg>
+
+      @if(true) {
+      <div
+        class="absolute top-1 right-2.5 flex items-center justify-center w-5 h-5 border-white bg-emerald-600 text-white rounded-full text-xs"
+      >
+        {{ productCount }}
+      </div>
+      }
+    </button>
+  </section>
+</header>

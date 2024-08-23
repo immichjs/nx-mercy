@@ -1,0 +1,144 @@
+<main class="flex justify-center py-8">
+  <section class="container">
+    <button
+      class="flex gap-1 items-center border bg-white px-3 py-1.5 rounded-lg text-zinc-900 font-semibold text-sm"
+      [routerLink]="['/products']"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        class="w-6"
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+          d="m15 5l-6 7l6 7"
+          class="stroke-zinc-900"
+        />
+      </svg>
+      Retornar
+    </button>
+
+    <section class="flex items-start container gap-4 mt-8">
+      <section class="flex-1 bg-white border rounded-lg overflow-hidden">
+        <div class="bg-white border-b p-4">
+          <h2 class="text-lg font-semibold text-zinc-900">
+            Carrinho de Compras ({{ checkout.products.length }})
+          </h2>
+        </div>
+
+        <ul>
+          @for(product of checkout.products; track product) {
+          <li class="flex gap-3 p-4 border-t first:border-none">
+            <div class="flex items-center">
+              <input type="checkbox" class="accent-emerald-600 w-4 h-4" />
+            </div>
+
+            <div
+              class="relative flex items-center justify-center min-w-20 h-20 rounded-lg border"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+              >
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  color="currentColor"
+                  class="stroke-zinc-300"
+                >
+                  <path
+                    d="M4.463 4.5c-.318.128-.6.289-.856.49q-.301.24-.554.523C2 6.693 2 8.463 2 12s0 5.306 1.053 6.487q.253.284.554.522C4.862 20 6.741 20 10.5 20h3c2.992 0 4.757 0 6-.5M8 4.016C8.728 4 9.554 4 10.5 4h3c3.759 0 5.638 0 6.892.99q.302.24.555.523C22 6.693 22 8.463 22 12c0 2.313 0 3.87-.294 5m-3.196-5h-.01m-13 0h-.009"
+                  />
+                  <path
+                    d="M13.744 13.742a2.5 2.5 0 1 1-3.535-3.535M2 2l20 20"
+                  />
+                </g>
+              </svg>
+            </div>
+
+            <section
+              class="flex justify-between items-center w-full overflow-hidden"
+            >
+              <div>
+                <h2 class="truncate font-semibold">{{ product.name }}</h2>
+                <p class="text-emerald-600 text-sm font-medium">Frete grátis</p>
+                <p class="truncate font-semibold text-lg text-emerald-600">
+                  <span class="text-xs text-zinc-400">R$</span>
+                  {{ product.price | currency : " " }}
+                </p>
+              </div>
+
+              <div class="flex items-center font-bold text-zinc-900 gap-2">
+                <button
+                  class="border rounded-lg w-8 h-8 font-semibold"
+                  (click)="onDecrementProductQuantity(product)"
+                >
+                  -
+                </button>
+                <span>{{ product.quantity }}</span>
+                <button
+                  class="border rounded-lg w-8 h-8 text-zinc-900 font-semibold"
+                  (click)="onIncrementProductQuantity(product)"
+                >
+                  +
+                </button>
+              </div>
+            </section>
+          </li>
+          } @empty {
+          <li class="p-4 border-t first:border-none">
+            Nenhum produto no seu carrinho :(
+          </li>
+          }
+        </ul>
+      </section>
+
+      <section class="w-96 bg-white border rounded-lg p-4">
+        <div class="bg-white">
+          <h2 class="text-lg text-zinc-900 font-semibold">Resumo</h2>
+        </div>
+
+        <div class="text-zinc-900">
+          <div class="flex justify-between items-center py-1">
+            <span>Sub total</span>
+            <span class="font-bold">{{
+              costCheckout.subTotal | currency : "R$ "
+            }}</span>
+          </div>
+          <div class="flex justify-between items-center py-1">
+            <span>Economia</span>
+            <span class="font-bold">{{
+              costCheckout.economy | currency : "R$ "
+            }}</span>
+          </div>
+          <div
+            class="flex justify-between items-center py-1 text-emerald-600 font-bold"
+          >
+            <span>Total estimado</span>
+            <span>{{ costCheckout.total | currency : "R$ " }}</span>
+          </div>
+
+          <button
+            class="flex items-center gap-2 justify-center bg-emerald-600 text-white rounded-lg w-full py-4 font-semibold disabled:cursor-not-allowed disabled:bg-emerald-600/80 mt-4"
+            [disabled]="loadingFinishOrder"
+            (click)="onFinishOrder()"
+          >
+            @if (loadingFinishOrder) { Finalizando... <app-loading />
+            } @else { Finalizar pedido }
+          </button>
+        </div>
+      </section>
+    </section>
+  </section>
+</main>
